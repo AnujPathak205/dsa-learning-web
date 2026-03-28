@@ -8,8 +8,6 @@ import Queue from '../features/Queue';
 export default function TopicPage() {
   const {topicId} = useParams();
 
-
-
   return (
     <div>
       {topicId == 'stack' && <Stack />}

@@ -1,12 +1,15 @@
 import Code from "./Code";
+import Sitemap from "./Sitemap";
 
 export default function TopicContent({ data }) {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 space-y-10 
-    bg-slate-50 dark:bg-slate-900 min-h-screen">
+    <>
+    <Sitemap />
+
+    <div className="max-w-4xl mx-auto px-4 py-10 space-y-10 min-h-screen">
 
       {/* Title */}
-      <div className="text-center space-y-2">
+      <div id="Description"  className="text-center space-y-2"  >
         <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-100">
           {data.title}
         </h1>
@@ -60,6 +63,8 @@ export default function TopicContent({ data }) {
         </ul>
       </section>
 
+
+
       {/* Complexity */}
       <section className="bg-white dark:bg-slate-800 
       border border-slate-200 dark:border-slate-700
@@ -89,19 +94,6 @@ export default function TopicContent({ data }) {
         </div>
       </section>
 
-      {/* Code */}
-      <section className="bg-white dark:bg-slate-800 
-      border border-slate-200 dark:border-slate-700
-      rounded-xl p-6 shadow-sm hover:shadow-md transition">
-
-        <h2 className="text-xl font-semibold mb-4 
-        text-slate-800 dark:text-slate-100">
-          💻 Code
-        </h2>
-
-        <Code code={data.code} />
-      </section>
-
       {/* Real Life Example */}
       <section className="bg-white dark:bg-slate-800 
       border border-slate-200 dark:border-slate-700
@@ -117,8 +109,26 @@ export default function TopicContent({ data }) {
         </p>
       </section>
 
-      {/* Questions */}
+
+
+      <hr id="Code" className="mb-20 mt-20 dark:text-white"/>
+
+      {/* Code */}
       <section className="bg-white dark:bg-slate-800 
+      border border-slate-200 dark:border-slate-700
+      rounded-xl p-6 shadow-sm hover:shadow-md transition">
+
+        <h2 className="text-xl font-semibold mb-4 
+        text-slate-800 dark:text-slate-100">
+          💻 Code
+        </h2>
+
+        <Code code={data.code} />
+      </section> 
+
+      
+      {/* Questions */}
+      <section id="Questions" className="bg-white dark:bg-slate-800 
       border border-slate-200 dark:border-slate-700
       rounded-xl p-6 shadow-sm hover:shadow-md transition">
 
@@ -157,7 +167,8 @@ export default function TopicContent({ data }) {
           🚀 Solve on LeetCode
         </a>
       </section>
-
     </div>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    </>
   );
 }

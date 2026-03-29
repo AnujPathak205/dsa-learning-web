@@ -2,7 +2,10 @@ import {Routes,Route} from 'react-router-dom'
 import HomePage from '../Pages/HomePage';
 import TopicListPage from '../Pages/TopicListPage';
 import AboutPage from '../Pages/AboutPage';
-import TopicPage from '../Pages/TopicPage';
+import PageNotFoundPage from '../Pages/PageNotFoundPage';
+import TopicPageDS from '../Pages/TopicPageDS';
+import TopicPageAlgo from '../Pages/TopicPageAlgo';
+import SubTopicPageAlgo from '../Pages/SubTopicPageAlgo';
 
 export default function AppRoutes() {
   return (
@@ -13,16 +16,37 @@ export default function AppRoutes() {
             />
 
             <Route path='/topics'
-                   element={<TopicListPage />}
+                   element={<TopicListPage filter="all" />}
+            /> 
+
+            <Route path='/topics/data-structures'
+                  element={<TopicListPage filter="ds" />}
+            /> 
+
+            <Route path='/topics/data-structures/:topicId'
+                   element={<TopicPageDS />}
             />
-                
-            <Route path='/topics/:topicId'
-                   element={<TopicPage />}
+            
+            <Route path='/topics/algorithms'
+                  element={<TopicListPage filter="al" />}
+            /> 
+
+            <Route path='/topics/algorithms/:topicId'
+                  element={<TopicPageAlgo />}
             />
+
+             <Route path='/topics/algorithms/:topicId/:subTopicId'
+                  element={<SubTopicPageAlgo />}
+             />
 
             <Route path='/about'
                    element={<AboutPage />}
             />
+
+            <Route path='*'
+                   element={<PageNotFoundPage />}
+            />
+
         </Routes>
     </>
   )

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Queue({ initialData = [] }) {
+export default function Queue({ initialData = [12,9,19,3] }) {
   const [queue, setQueue] = useState(initialData);
   const [input, setInput] = useState("");
   const [action, setAction] = useState(""); // 'enqueue' or 'dequeue'

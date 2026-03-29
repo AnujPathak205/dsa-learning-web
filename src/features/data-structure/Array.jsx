@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Array({ initialData = [] }) {
+export default function Array({ initialData = [12,9,13,7] }) {
   const [array, setArray] = useState(initialData);
   const [value, setValue] = useState("");
   const [index, setIndex] = useState("");
@@ -94,8 +94,11 @@ export default function Array({ initialData = [] }) {
           if (action === "update" && idx === parseInt(index)) bgColor = "bg-blue-400 dark:bg-blue-500";
 
           return (
-            <div key={idx} className={`min-w-[60px] h-12 flex items-center justify-center rounded-md text-white font-bold transition-all duration-300 ${bgColor}`}>
-              {item}
+            <div key={idx} className="flex flex-col items-center">
+              <div className={`min-w-[60px] h-12 flex items-center justify-center rounded-md text-white font-bold transition-all duration-300 ${bgColor}`}>
+                {item}
+              </div>
+              <span className="text-sm mt-1 text-slate-800 dark:text-slate-200">{idx}</span>
             </div>
           );
         })}

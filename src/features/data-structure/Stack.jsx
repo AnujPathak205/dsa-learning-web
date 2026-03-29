@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Stack({ initialData = [] }) {
+export default function Stack({ initialData = [12,78,8] }) {
   const [stack, setStack] = useState(initialData);
   const [input, setInput] = useState("");
   const [action, setAction] = useState(""); // 'push' or 'pop'

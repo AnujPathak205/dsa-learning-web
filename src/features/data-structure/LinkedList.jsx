@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function LinkedList({ initialData = [] }) {
+export default function LinkedList({ initialData = [12,29,17,6] }) {
   const [list, setList] = useState(initialData);
   const [value, setValue] = useState("");
   const [action, setAction] = useState(""); // 'insertHead', 'insertTail', 'deleteHead', 'deleteTail'

@@ -2,7 +2,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-700 mt-10 p-8 sm:p-12 flex flex-col sm:flex-row justify-between items-center gap-6 min-h-[150px]">
+    <footer className="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-700  p-8 sm:p-12 flex flex-col sm:flex-row justify-between items-center gap-6 min-h-[150px]">
       
       <p className="text-slate-800 dark:text-slate-100 font-semibold text-lg">
         © {new Date().getFullYear()} Anuj Pathak

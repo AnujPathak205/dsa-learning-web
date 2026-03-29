@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { topics } from "../data/algorithm/topics";
-import PageNotFoundPage from "../pages/PageNotFoundPage";
+import PageNotFoundPage from "./PageNotFoundPage";
 
 export default function TopicPageAlgo() {
   const { topicId } = useParams();

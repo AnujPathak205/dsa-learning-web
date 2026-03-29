@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { topics } from "../data/topics.js";
 

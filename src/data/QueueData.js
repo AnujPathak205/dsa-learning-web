@@ -124,5 +124,8 @@ First person in line is served first.
   { question: "Which queue is suitable for storing tasks in order of arrival?", options: ["Priority Queue", "Circular Queue", "Normal Queue", "Deque"], answer: "Normal Queue" }
 ],
 
-  practiceLink: "https://leetcode.com/problems/implement-queue-using-stacks/"
-};
+practiceLink: [
+  "https://leetcode.com/problems/implement-queue-using-stacks/",
+  "https://leetcode.com/problems/sliding-window-maximum/",
+  "https://leetcode.com/problems/design-circular-queue/"
+]};

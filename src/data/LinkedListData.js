@@ -123,5 +123,8 @@ You cannot directly jump to a position.
   { question: "Why is a linked list preferred over an array in dynamic memory?", options: ["Faster indexing", "Flexible size", "Less memory", "Sorted order"], answer: "Flexible size" }
 ],
 
-  practiceLink: "https://leetcode.com/problems/reverse-linked-list/"
-};
+practiceLink: [
+  "https://leetcode.com/problems/reverse-linked-list/",
+  "https://leetcode.com/problems/merge-two-sorted-lists/",
+  "https://leetcode.com/problems/linked-list-cycle/"
+]};

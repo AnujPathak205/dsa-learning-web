@@ -175,5 +175,10 @@ You can directly access any locker.
   }
 ],
 
-  practiceLink: "https://leetcode.com/problems/two-sum/"
+practiceLink: [
+  "https://leetcode.com/problems/two-sum/",
+  "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+  "https://leetcode.com/problems/maximum-subarray/"
+]
+
 };

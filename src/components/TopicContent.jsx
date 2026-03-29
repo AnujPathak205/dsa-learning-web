@@ -8,7 +8,7 @@ export default function TopicContent({ data,visual }) {
     <Sitemap />
         
 
-    <div className="max-w-4xl mx-auto px-4 py-10 space-y-10 min-h-screen">
+    <div className="max-w-4xl mx-auto px-4 py-10  space-y-10 min-h-screen">
 
       {/* Title */}
       <div id="Description"  className="text-center space-y-2"  >
@@ -156,20 +156,20 @@ export default function TopicContent({ data,visual }) {
       <Quiz questions={data.quiz} />
 
       {/* Practice Link */}
+      {data.practiceLink.map((link,idx) => 
       <section className="text-center">
         <a
-          href={data.practiceLink}
+          href={link}
           target="_blank"
           rel="noreferrer"
           className="inline-block bg-indigo-600 hover:bg-indigo-700 
           text-white px-6 py-2 rounded-lg 
           shadow-md hover:shadow-lg transition"
         >
-          🚀 Solve on LeetCode
+          🚀 Solve on LeetCode (Problem {idx+1})
         </a>
-      </section>
+      </section>)}
     </div>
-    <br /><br /><br /><br /><br /><br /><br /><br />
     </>
   );
 }

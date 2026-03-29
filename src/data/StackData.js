@@ -180,5 +180,8 @@ Last plate placed is the first one removed.
   }
 ],
 
-  practiceLink: "https://leetcode.com/problems/valid-parentheses/"
-};
+practiceLink: [
+  "https://leetcode.com/problems/valid-parentheses/",
+  "https://leetcode.com/problems/next-greater-element-i/",
+  "https://leetcode.com/problems/min-stack/"
+]};

@@ -34,7 +34,7 @@ export default function Quiz({ questions }) {
   };
 
   return (
-    <section className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl p-6 shadow-md transition mt-6">
+    <section className="bg-white  dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl p-8 shadow-md transition mt-6">
 
       <h2 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-2">
         📝 Quiz

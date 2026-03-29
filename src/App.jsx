@@ -20,7 +20,7 @@ function App() {
     }, [dark]);
 
   return (
-    <div className='bg-slate-50 dark:bg-slate-900'>
+    <div className='bg-gray-50 dark:bg-gray-900'>
       <Navbar dark={dark} setDark={setDark}/>
       <AppRoutes />
     </div>

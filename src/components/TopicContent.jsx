@@ -1,10 +1,12 @@
 import Code from "./Code";
 import Sitemap from "./Sitemap";
+import Quiz from "./Quiz";
 
-export default function TopicContent({ data }) {
+export default function TopicContent({ data,visual }) {
   return (
     <>
     <Sitemap />
+        
 
     <div className="max-w-4xl mx-auto px-4 py-10 space-y-10 min-h-screen">
 
@@ -110,25 +112,19 @@ export default function TopicContent({ data }) {
       </section>
 
 
+      <hr id='Visual' className="mb-20 mt-20 dark:text-white"/>
+
+      {visual}
 
       <hr id="Code" className="mb-20 mt-20 dark:text-white"/>
 
-      {/* Code */}
-      <section className="bg-white dark:bg-slate-800 
-      border border-slate-200 dark:border-slate-700
-      rounded-xl p-6 shadow-sm hover:shadow-md transition">
-
-        <h2 className="text-xl font-semibold mb-4 
-        text-slate-800 dark:text-slate-100">
-          💻 Code
-        </h2>
-
-        <Code code={data.code} />
-      </section> 
+      <Code code={data.code} />
+      
+      <hr id="Questions" className="mb-20 mt-20 dark:text-white"/>
 
       
       {/* Questions */}
-      <section id="Questions" className="bg-white dark:bg-slate-800 
+      <section  className="bg-white dark:bg-slate-800 
       border border-slate-200 dark:border-slate-700
       rounded-xl p-6 shadow-sm hover:shadow-md transition">
 
@@ -153,6 +149,11 @@ export default function TopicContent({ data }) {
           ))}
         </div>
       </section>
+
+      <hr id="Quiz" className="mb-20 mt-20 dark:text-white"/>
+
+
+      <Quiz questions={data.quiz} />
 
       {/* Practice Link */}
       <section className="text-center">

@@ -48,8 +48,7 @@ Fast for access but costly for insertion/deletion.
   ],
 
   code: {
-    java: `
-// Java Array Example
+    basic:{java: `// Java Array Example
 int[] arr = new int[5];
 
 arr[0] = 10;
@@ -58,8 +57,7 @@ arr[1] = 20;
 System.out.println(arr[0]); // 10
     `,
 
-    cpp: `
-#include <iostream>
+    cpp: `#include <iostream>
 using namespace std;
 
 int main() {
@@ -73,12 +71,52 @@ int main() {
 }
     `,
 
-    python: `
-# Python Array Example (using list)
+    python: `# Python Array Example (using list)
 arr = [10, 20, 30]
 
 print(arr[0])  # 10
-    `
+    `},
+
+    insertion:{
+      java:`int insert(int[] arr, int n, int capacity, int index, int value) {
+    if (n >= capacity) return n;                    // 1
+
+    for (int i = n - 1; i >= index; i--) {          // 2
+        arr[i + 1] = arr[i];                        // 3
+    }
+
+    arr[index] = value;                             // 4
+
+    return n + 1;                                   // 5
+}`,
+
+      cpp:`int insert(int arr[], int n, int capacity, int index, int value) {
+    if (n >= capacity) return n;                    // 1
+
+    for (int i = n - 1; i >= index; i--) {          // 2
+        arr[i + 1] = arr[i];                        // 3
+    }
+
+    arr[index] = value;                             // 4
+
+    return n + 1;                                   // 5
+}`,
+      python:`def insert(arr, n, capacity, index, value):
+    if n >= capacity:
+        return n                                    # 1
+
+    i = n - 1                                       # 2
+    while i >= index:
+        arr[i + 1] = arr[i]                         # 3
+        i -= 1
+
+    arr[index] = value                              # 4
+
+    return n + 1                                    # 5`
+    }
+
+
+    
   },
 
   realLifeExample: `

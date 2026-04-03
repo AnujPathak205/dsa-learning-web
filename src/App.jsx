@@ -22,9 +22,9 @@ function App() {
 
   return (
     <div className='bg-gray-50 dark:bg-gray-900'>
-      <Navbar dark={dark} setDark={setDark}/>
+      {/* <Navbar dark={dark} setDark={setDark}/> */}
       <AppRoutes />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

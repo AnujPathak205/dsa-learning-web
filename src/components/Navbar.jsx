@@ -10,7 +10,7 @@ export default function Navbar({ dark, setDark }) {
       border-slate-200 dark:border-slate-800 
       bg-white dark:bg-slate-950">
 
-      <div className="max-w-6xl mx-auto px-5 py-4 flex justify-between items-center">
+      <div className="max-w-6xl mx-auto px-5 py-3 flex justify-between items-center">
 
         {/* Logo */}
         <h1 className="text-lg md:text-xl font-bold 
@@ -120,7 +120,7 @@ export default function Navbar({ dark, setDark }) {
       )}
 
       {/* Styles */}
-      <style jsx>{`
+      <style>{`
         /* Desktop Links */
         .nav-link {
           position: relative;

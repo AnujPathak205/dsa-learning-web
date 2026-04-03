@@ -1,11 +1,6 @@
 import { useParams } from 'react-router-dom' 
 import TopicContentDS from '../components/TopicContentDS'
 
-import Array from '../features/data-structure/Array';
-import LinkedList from '../features/data-structure/LinkedList';
-import Stack from '../features/data-structure/Stack';
-import Queue from '../features/data-structure/Queue';
-
 import {arrayData} from '../data/data-structure/ArrayData';
 import {linkedListData} from '../data/data-structure/LinkedListData';
 import {stackData} from '../data/data-structure/StackData';

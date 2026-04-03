@@ -155,7 +155,7 @@ export default function TopicContentDS({ data,visualPath}) {
 
         <hr id="Code" className="mb-20 mt-20 dark:text-white" />
 
-        <Code code={data.code} />
+        <Code code={data.code.basic} />
 
         <hr id="Questions" className="mb-20 mt-20 dark:text-white" />
 

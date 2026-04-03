@@ -2,9 +2,8 @@ import { useState } from "react";
 import { Copy, Check , Code2 } from "lucide-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { div } from "framer-motion/client";
 
-export default function Code({ code , currentLine = -1}) {
+export default function CodeVisual({ code , currentLine = 1}) {
   const [copied, setCopied] = useState(false);
   const [language, setLanguage] = useState("java");
 
@@ -22,17 +21,11 @@ export default function Code({ code , currentLine = -1}) {
 
   return (
     <section
-      className="bg-white dark:bg-slate-800 
-      border border-slate-200 dark:border-slate-700
-      rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition"
+      className="
+      border border-slate-200 dark
+      rounded-xl shadow-sm hover:shadow-md transition"
     >
-      {/* Title */}
-        <h2 className="text-lg sm:text-xl font-semibold mb-4 
-            text-slate-800 dark:text-slate-100 flex items-center gap-2">
-            <Code2 className="w-5 h-5 text-indigo-500" />
-            Code
-        </h2>
-
+      
       <div className="relative">
 
         {/* Top Bar */}

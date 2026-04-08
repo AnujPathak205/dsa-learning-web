@@ -15,8 +15,6 @@ import {
   RotateCcw,
   X,
 } from "lucide-react";
-import { sleep } from "./logic/helperFunctions";
-import { steps } from "framer-motion";
 
 export default function Array() {
   const initialArr = [
@@ -46,41 +44,57 @@ export default function Array() {
 
   const [operation, setOperation] = useState("none");
 
+  const [message, setMessage] = useState("Choose an operation to start visualization");
+  const [messageArr, setMessageArr] = useState("Choose an operation to start visualization");
 
-  const [message, setMessage] = useState(
-    "Choose an operation to start visualization"
-  );
 
   const [tasking, setTasking] = useState(false);
   const [currentLine, setCurrentLine] = useState(-1);
+  const [currentLineArr,setCurrentLineArr] = useState([]);
 
   const [speed, setSpeed] = useState(1000);
   const [step, setStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    if (step >= stepArr.length) return;
+    if(isPlaying){
+      if (step >= stepArr.length){ 
+        setStep(0);
+        setIsPlaying(false);
+        return;
+      }
 
-    const timer = setTimeout(() => {
-      setArray(stepArr[step]);
-      setStep((prev) => prev + 1);
-    }, speed);
+      const timer = setTimeout(() => {
+        setArray(stepArr[step]);
+        setCurrentLine(currentLineArr[step]);
+        if(messageArr[step]) setMessage(messageArr[step]);
+        setStep((prev) => prev + 1);
+      }, speed);
 
-    return () => clearTimeout(timer);
-  },[step, stepArr]);
+
+      return () => clearTimeout(timer);
+    }
+  },[step, stepArr,isPlaying]);
 
   function onQuit(){
-
+    if(stepArr.length) setArray([...stepArr[0]]);
+    setN(prev => prev-1);
   }
 
+  const handleStartInsert = () => {
+    setIsPlaying(true);
+    if(stepArr.length) setArray(stepArr[stepArr.length-1]);
+    if (operation === "insertion") 
+      return handleInsertion(array,setArray,stepArr,setStepArr,n,setN,inputIndex,inputValue,setOutput,setCurrentLineArr,setMessage,setMessageArr);
+    if (operation === "deletion")
+      return handleDeletion(array,setArray,stepArr,setStepArr,n,setN,inputIndex,setOutput,setCurrentLineArr,setMessage,setMessageArr);
+    if (operation === "search")
+      return handleSearch(array, setArray, inputValue, setMessage, setTasking, speed);
+  }
 
+  const isDisabled = isPlaying;
 
-  // totalSteps,
-
-  const isDisabled = tasking;
-
-  const totalSteps =
-    arrayData.code[operation]?.java?.split("\n").length || 1;
+  const totalSteps = stepArr.length;
 
   return (
     <div className="h-screen flex flex-col bg-gray-100 dark:bg-slate-900">
@@ -205,13 +219,7 @@ export default function Array() {
               </div>
             ) : (
               <button
-                onClick={() => {
-                  if (operation === "insertion") return handleInsertion(array,setArray,setStepArr,n,setN,inputIndex,inputValue,setMessage,setTasking,speed,setCurrentLine,setOutput);
-                  if (operation === "deletion")
-                    return handleDeletion(array, setArray, inputIndex, setMessage, setTasking, speed);
-                  if (operation === "search")
-                    return handleSearch(array, setArray, inputValue, setMessage, setTasking, speed);
-                }}
+                onClick={handleStartInsert}
                 disabled={isDisabled}
                 className={`w-full py-2 rounded-lg text-white ${
                   isDisabled ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
@@ -330,6 +338,7 @@ export default function Array() {
       </span>
 
       <button
+        onClick={onQuit}
         className="
           flex items-center justify-center
           w-7 h-7 rounded-md

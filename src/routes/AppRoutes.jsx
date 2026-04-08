@@ -7,6 +7,8 @@ import TopicPageDS from '../Pages/TopicPageDS';
 import TopicPageAlgo from '../Pages/TopicPageAlgo';
 import SubTopicPageAlgo from '../Pages/SubTopicPageAlgo';
 import VisualPage from '../Pages/VisualPage';
+import LoginPage from '../Pages/LoginPage';
+import SignupPage from '../Pages/SignupPage';
 
 export default function AppRoutes() {
   return (
@@ -14,6 +16,14 @@ export default function AppRoutes() {
         <Routes>
             <Route path='/'
                    element={<HomePage />}
+            />
+
+            <Route path='/login'
+                   element={<LoginPage />}
+            />
+
+            <Route path='/register'
+                   element={<SignupPage />}
             />
 
             <Route path='/topics'

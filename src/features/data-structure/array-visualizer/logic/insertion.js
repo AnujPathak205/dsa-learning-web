@@ -8,8 +8,8 @@ function generateInsertionSteps(array,n,setN,inputIndex,inputValue,setOutput) {
     const capacity = array.length;
     let newArr = [...array];
 
-    if(n >= capacity){
-      setOutput("Insertion not possible (Array is full)");
+    if(n >= capacity || inputIndex < 0 || inputIndex > n){
+      setOutput("Insertion not possible");
       setTimeout(() => {setOutput("")},5000);
       steps.push([...newArr]);
       steps.push([...newArr]);
@@ -19,7 +19,7 @@ function generateInsertionSteps(array,n,setN,inputIndex,inputValue,setOutput) {
       lines.push(5);
       messages.push(false);
       messages.push(false);
-      messages.push("Array is full");
+      messages.push("insertion not possible");
       return {stepsArr:steps,linesArr:lines,messagesArr:messages};
     }
 
@@ -60,33 +60,27 @@ function generateInsertionSteps(array,n,setN,inputIndex,inputValue,setOutput) {
     return {stepsArr:steps,linesArr:lines,messagesArr:messages};
 }
 
-  export async function handleInsertion(array,setArray,setStepArr,n,setN,inputIndex,inputValue,setMessage,setTasking,speed,setCurrentLine,setOutput){
+  export async function handleInsertion(array,setArray,stepArr,setStepArr,n,setN,inputIndex,inputValue,setOutput,setCurrentLineArr,setMessage,setMessageArr){
     setOutput("");
+    setStepArr([]);
     if(inputValue == "" || inputIndex == ""){
       setMessage("Please provide both value and index to insert.");
       return;
     };
 
-    if(inputIndex > array.length){
-      setMessage("Index out of bounds. Please enter a valid index.");
-      return;
-    }
+    // if(stepArr.length) setArray(stepArr[stepArr.length-1]);
+    // setArray(...[]);
+    // console.log(array);
+    // console.log(stepArr[stepArr.length-1]);
 
     const stepInfo = generateInsertionSteps(array,n,setN,inputIndex,inputValue,setOutput);
     const stepsArr = stepInfo.stepsArr;
     const linesArr = stepInfo.linesArr;
     const messagesArr = stepInfo.messagesArr;
     
-    // for(let i = 0;i < stepsArr.length;i++){
-    //   if(messagesArr[i]) setMessage(messagesArr[i]);
-    //   setArray(stepsArr[i]);
-    //   setCurrentLine(linesArr[i]);
-    //   await sleep(speed);
-    // }
-
     setStepArr([...stepsArr]);
-
-    setTimeout(() => setCurrentLine(-1),5000); 
+    setCurrentLineArr([...linesArr]);
+    setMessageArr([...messagesArr]);
 
 }
 

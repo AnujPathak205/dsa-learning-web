@@ -6,6 +6,9 @@ import CodeVisual from "../../../components/CodeVisual";
 import { handleInsertion } from "./logic/insertion";
 import { handleDeletion } from "./logic/deletion";
 import { handleSearch } from "./logic/search";
+import { handleReverse } from "./logic/reverse";
+import { handleMax } from "./logic/max";
+import { handleMin } from "./logic/min";
 
 import {
   Play,
@@ -22,8 +25,8 @@ export default function Array() {
     { id: 1, value: 5, state: "normal" },
     { id: 2, value: 1, state: "normal" },
     { id: 3, value: 7, state: "normal" },
-    { id: 4, value: null, state: "normal" },
-    { id: 5, value: null, state: "normal" },
+    { id: 4, value: 8, state: "normal" },
+    { id: 5, value: 21, state: "normal" },
     { id: 6, value: null, state: "normal" },
     { id: 7, value: null, state: "normal" },
      { id: 8, value: null, state: "normal" },
@@ -39,7 +42,7 @@ export default function Array() {
   const [stepArr, setStepArr] = useState([]);
   const [inputValue, setInputValue] = useState(22);
   const [inputIndex, setInputIndex] = useState(1);
-  const [n,setN] = useState(4);
+  const [n,setN] = useState(6);
   const [output,setOutput] = useState("");
   const [outputValue,setOutputValue] = useState("");
 
@@ -67,7 +70,7 @@ export default function Array() {
 
       if(step == stepArr.length-1){
         setOutputValue(output);
-        setTimeout(() => setOutputValue(""),5000);
+        setTimeout(() => setOutputValue(""),6000);
       }
 
       const timer = setTimeout(() => {
@@ -108,6 +111,7 @@ export default function Array() {
     };
     setCurrentLine(-1);
     setOutput("");
+    setIsPlaying(false);
   }
 
   const handleStart = () => {
@@ -116,11 +120,17 @@ export default function Array() {
     const ARRAY = stepArr.length? [...stepArr[stepArr.length-1]]: [...array];
 
     if (operation === "insertion") 
-      return handleInsertion(ARRAY,setArray,stepArr,setStepArr,n,setN,inputIndex,inputValue,setOutput,setCurrentLineArr,setMessage,setMessageArr);
+      return handleInsertion(ARRAY,setStepArr,n,setN,inputIndex,inputValue,setOutput,setCurrentLineArr,setMessage,setMessageArr);
     if (operation === "deletion")
-      return handleDeletion(ARRAY,setArray,stepArr,setStepArr,n,setN,inputIndex,setOutput,setCurrentLineArr,setMessage,setMessageArr);
+      return handleDeletion(ARRAY,setStepArr,n,setN,inputIndex,setOutput,setCurrentLineArr,setMessage,setMessageArr);
     if (operation === "search")
       return handleSearch(ARRAY,setArray,stepArr,setStepArr,n,setN,inputValue,setOutput,setCurrentLineArr,setMessage,setMessageArr);
+    if (operation === "reverse")
+      return handleReverse(ARRAY,setStepArr,n,setOutput,setCurrentLineArr,setMessage,setMessageArr);
+    if (operation === "min")
+      return handleMin(ARRAY,setStepArr,n,setOutput,setCurrentLineArr,setMessage,setMessageArr);
+    if (operation === "max")
+      return handleMax(ARRAY,setStepArr,n,setOutput,setCurrentLineArr,setMessage,setMessageArr);
   }
 
   const isDisabled = isPlaying;
@@ -138,11 +148,32 @@ export default function Array() {
 
           <ArrayDisplay array={array} />
 
-          <div className="mt-4 w-full text-center px-4 py-2 rounded-lg 
-            bg-blue-100 dark:bg-slate-700 
-            text-blue-800 dark:text-blue-300 text-sm">
-            {message}
-          </div>
+          <div
+  className="mt-4 w-full text-center px-4 py-2 rounded-lg 
+  bg-blue-100 dark:bg-slate-700 
+  text-blue-800 dark:text-blue-300 text-sm"
+>
+  {typeof message === "string" &&
+    message.split("#").map((part, index) => {
+      // First part = normal text
+      if (index === 0) {
+        return <span key={index}>{part}</span>;
+      }
+
+      // Variable part (after #)
+      return (
+        <span
+          key={index}
+          className="ml-2 px-2 py-0.5 rounded 
+          bg-blue-200 dark:bg-slate-600 
+          text-blue-900 dark:text-blue-200 
+          font-medium"
+        >
+          {part.trim()}
+        </span>
+      );
+    })}
+</div>
           {outputValue.length !== 0 && (
             <div className="
               mt-2 w-full
@@ -182,7 +213,7 @@ export default function Array() {
         <div className="flex flex-col gap-4 overflow-hidden">
 
           {/* 🔥 CODE / INTRO */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 flex-1 overflow-auto">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-1 flex-1 overflow-auto">
 
             {operation !== "none" ? (
               <CodeVisual
@@ -249,7 +280,7 @@ export default function Array() {
                     value={inputValue}
                     disabled={isDisabled}
                     onChange={(e) => setInputValue(Number(e.target.value))}
-                    className="w-28 px-3 py-2 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white
+                    className="w-16 px-3 py-1 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white
                     disabled:opacity-50"
                   />
                 </div>
@@ -265,7 +296,7 @@ export default function Array() {
                     value={inputIndex}
                     disabled={isDisabled}
                     onChange={(e) => setInputIndex(Number(e.target.value))}
-                    className="w-28 px-3 py-2 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white
+                    className="w-16 px-3 py-1 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white
                     disabled:opacity-50"
                   />
                 </div>
@@ -274,17 +305,99 @@ export default function Array() {
 
             {/* BUTTONS */}
             {operation === "none" ? (
-              <div className="flex gap-3">
-                <button onClick={() => {setOperation("insertion"),setCurrentLine(-1)}} className="flex-1 py-2 bg-green-500 text-white rounded-lg">
-                  Insertion
+              <div className="w-full space-y-4">
+
+            {/* Core Operations */}
+            <div>
+              <p className="text-xs text-slate-500 mb-2 px-1">Core Operations</p>
+
+              <div className="grid grid-cols-3 gap-3">
+
+                <button
+                  onClick={() => { setOperation("insertion"); setCurrentLine(-1); }}
+                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
+                  bg-gradient-to-r from-green-400 to-green-600 text-white
+                  shadow-md transition-all duration-300
+                  hover:scale-105 hover:shadow-xl
+                  active:scale-95 overflow-hidden"
+                >
+                  <span className="relative z-10">Insert</span>
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
                 </button>
-                <button onClick={() => {setOperation("deletion"),setCurrentLine(-1)}} className="flex-1 py-2 bg-red-500 text-white rounded-lg">
-                  Deletion
+
+                <button
+                  onClick={() => { setOperation("deletion"); setCurrentLine(-1); }}
+                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
+                  bg-gradient-to-r from-red-400 to-red-600 text-white
+                  shadow-md transition-all duration-300
+                  hover:scale-105 hover:shadow-xl
+                  active:scale-95 overflow-hidden"
+                >
+                  <span className="relative z-10">Delete</span>
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
                 </button>
-                <button onClick={() => {setOperation("search"),setCurrentLine(-1)}} className="flex-1 py-2 bg-purple-500 text-white rounded-lg">
-                  Search
+
+                <button
+                  onClick={() => { setOperation("search"); setCurrentLine(-1); }}
+                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
+                  bg-gradient-to-r from-purple-400 to-purple-600 text-white
+                  shadow-md transition-all duration-300
+                  hover:scale-105 hover:shadow-xl
+                  active:scale-95 overflow-hidden"
+                >
+                  <span className="relative z-10">Search</span>
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
                 </button>
+
               </div>
+            </div>
+
+            {/* Advanced Operations */}
+            <div>
+              <p className="text-xs text-slate-500 mb-2 px-1">Advanced</p>
+
+              <div className="grid grid-cols-3 gap-3">
+
+                <button
+                  onClick={() => { setOperation("reverse"); setCurrentLine(-1); }}
+                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
+                  bg-gradient-to-r from-blue-400 to-blue-600 text-white
+                  shadow-md transition-all duration-300
+                  hover:scale-105 hover:shadow-xl
+                  active:scale-95 overflow-hidden"
+                >
+                  <span className="relative z-10">Reverse</span>
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
+                </button>
+
+                <button
+                  onClick={() => { setOperation("min"); setCurrentLine(-1); }}
+                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
+                  bg-gradient-to-r from-orange-400 to-orange-600 text-white
+                  shadow-md transition-all duration-300
+                  hover:scale-105 hover:shadow-xl
+                  active:scale-95 overflow-hidden"
+                >
+                  <span className="relative z-10">Min</span>
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
+                </button>
+
+                <button
+                  onClick={() => { setOperation("max"); setCurrentLine(-1); }}
+                  className="group relative py-2.5 rounded-xl text-sm font-semibold 
+                  bg-gradient-to-r from-pink-400 to-pink-600 text-white
+                  shadow-md transition-all duration-300
+                  hover:scale-105 hover:shadow-xl
+                  active:scale-95 overflow-hidden"
+                >
+                  <span className="relative z-10">Max</span>
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-white transition duration-300"></span>
+                </button>
+
+              </div>
+            </div>
+
+          </div>
             ) : (
               <button
                 onClick={handleStart}
@@ -301,125 +414,125 @@ export default function Array() {
       </div>
 
       {/* 🔥 PLAYER BAR (SLIM & COMPACT FOR ALL SCREENS) */}
-<div className="
-  border-t border-slate-200/70 dark:border-slate-700/60
-  bg-white/80 dark:bg-slate-900/80
-  backdrop-blur-md
-  px-3 py-2
-">
+      <div className="
+        border-t border-slate-200/70 dark:border-slate-700/60
+        bg-white/80 dark:bg-slate-900/80
+        backdrop-blur-md
+        px-3 py-2
+      ">
 
-  {/* 🔹 Progress Bar */}
-  <input
-    type="range"
-    min={0}
-    max={Math.max(totalSteps - 1, 0)}
-    value={step}
-    onChange={(e) => {
-      setIsPlaying(false);
-      setStep(Number(e.target.value));
-    }}
-    className="
-      w-full h-1 rounded-lg appearance-none cursor-pointer
-      bg-slate-300 dark:bg-slate-700
-      accent-indigo-500 mb-2
-    "
-  />
+        {/* 🔹 Progress Bar */}
+        <input
+          type="range"
+          min={0}
+          max={Math.max(totalSteps - 1, 0)}
+          value={step}
+          onChange={(e) => {
+            setIsPlaying(false);
+            setStep(Number(e.target.value));
+          }}
+          className="
+            w-full h-1 rounded-lg appearance-none cursor-pointer
+            bg-slate-300 dark:bg-slate-700
+            accent-indigo-500 mb-2
+          "
+        />
 
-  {/* 🔹 Controls Row (Single Line Always) */}
-  <div className="flex items-center justify-between gap-2 text-xs text-slate-600 dark:text-slate-300">
+        {/* 🔹 Controls Row (Single Line Always) */}
+        <div className="flex items-center justify-between gap-2 text-xs text-slate-600 dark:text-slate-300">
 
-    {/* 🔸 LEFT: Speed */}
-    <div className="flex items-center gap-2 min-w-[90px]">
-      <span className="text-[11px] whitespace-nowrap">
-        {(2000 / speed).toFixed(1)}x
-      </span>
+          {/* 🔸 LEFT: Speed */}
+          <div className="flex items-center gap-2 min-w-[90px]">
+            <span className="text-[11px] whitespace-nowrap">
+              {(2000 / speed).toFixed(1)}x
+            </span>
 
-      <input
-        type="range"
-        min={200}
-        max={2000}
-        step={100}
-        value={speed}
-        onChange={(e) => setSpeed(Number(e.target.value))}
-        className="
-          w-16 h-1 rounded-lg appearance-none cursor-pointer
-          bg-slate-300 dark:bg-slate-700
-          accent-indigo-500
-        "
-      />
-    </div>
+            <input
+              type="range"
+              min={200}
+              max={2000}
+              step={100}
+              value={speed}
+              onChange={(e) => setSpeed(Number(e.target.value))}
+              className="
+                w-16 h-1 rounded-lg appearance-none cursor-pointer
+                bg-slate-300 dark:bg-slate-700
+                accent-indigo-500
+              "
+            />
+          </div>
 
-    {/* 🔸 CENTER: Controls */}
-    <div className="flex items-center gap-1">
+          {/* 🔸 CENTER: Controls */}
+          <div className="flex items-center gap-1">
 
-      <button
-        onClick={() => {
-          setIsPlaying(false);
-          setStep(0);
-        }}
-        className="icon-btn-sm"
-      >
-        <RotateCcw size={14} />
-      </button>
+            <button
+              onClick={() => {
+                setIsPlaying(false);
+                setStep(0);
+              }}
+              className="icon-btn-sm"
+            >
+              <RotateCcw size={14} />
+            </button>
 
-      <button
-        onClick={() => {
-          setIsPlaying(false);
-          setStep((s) => Math.max(s - 1, 0));
-        }}
-        className="icon-btn-sm"
-      >
-        <SkipBack size={14} />
-      </button>
+            <button
+              onClick={() => {
+                setIsPlaying(false);
+                setStep((s) => Math.max(s - 1, 0));
+              }}
+              className="icon-btn-sm"
+            >
+              <SkipBack size={14} />
+            </button>
 
-      <button
-        onClick={() => setIsPlaying((p) => !p)}
-        className="
-          flex items-center justify-center
-          w-8 h-8 rounded-full
-          bg-indigo-500 text-white
-          hover:bg-indigo-600 active:scale-95
-          transition
-        "
-      >
-        {isPlaying ? <Pause size={14} /> : <Play size={14} />}
-      </button>
+            <button
+              onClick={() => setIsPlaying((p) => !p)}
+              className="
+                flex items-center justify-center
+                w-8 h-8 rounded-full
+                bg-indigo-500 text-white
+                hover:bg-indigo-600 active:scale-95
+                transition
+              "
+            >
+              {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+            </button>
 
-      <button
-        onClick={() => {
-          setIsPlaying(false);
-          setStep((s) =>
-            Math.min(s + 1, totalSteps - 1)
-          );
-        }}
-        className="icon-btn-sm"
-      >
-        <SkipForward size={14} />
-      </button>
-    </div>
+            <button
+              onClick={() => {
+                setIsPlaying(false);
+                setStep((s) =>
+                  Math.min(s + 1, totalSteps - 1)
+                );
+              }}
+              className="icon-btn-sm"
+            >
+              <SkipForward size={14} />
+            </button>
+          </div>
 
-    {/* 🔸 RIGHT: Step + Close */}
-    <div className="flex items-center gap-2 min-w-[80px] justify-end">
+          {/* 🔸 RIGHT: Step + Close */}
+          <div className="flex items-center gap-2 min-w-[80px] justify-end">
 
-      <span className="text-[11px] whitespace-nowrap">
-        {step + 1}/{totalSteps}
-      </span>
+            <span className="text-[11px] whitespace-nowrap">
+              {step + 1}/{totalSteps}
+            </span>
 
-      <button
-        onClick={onQuit}
-        className="
-          flex items-center justify-center
-          w-7 h-7 rounded-md
-          bg-slate-200 dark:bg-slate-700
-          hover:bg-red-500 hover:text-white
-          transition
-        "
-      >
-        <X size={14} />
-      </button>
-    </div>
-  </div>
-</div>
+            <button
+              onClick={onQuit}
+              className="
+                flex items-center justify-center
+                w-7 h-7 rounded-md
+                bg-slate-200 dark:bg-slate-700
+                hover:bg-red-500 hover:text-white
+                transition
+              "
+            >
+              <X size={14} />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

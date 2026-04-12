@@ -49,7 +49,7 @@ function generateSearchSteps(array,n,setN,inputValue,setOutput){
 
     steps.push([...newArr]);
     lines.push(2);
-    messages.push(`Searching on index: ${i}...`);
+    messages.push(`Searching on index: ${i} # i = ${i}`);
 
     newArr[i] = {
       id:newArr[i].id,

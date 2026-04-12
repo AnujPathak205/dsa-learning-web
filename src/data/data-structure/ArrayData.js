@@ -130,7 +130,7 @@ print(arr[0])  # 10
       java:`void delete(int[] arr, int n, int capacity, int pos) {
     // check underflow
     if (n <= 0 || pos < 0 || pos >= n) {
-        System.out.println("Deletion not possible (Array is empty)");
+        System.out.println("Deletion not possible");
         return;
     }
 
@@ -192,7 +192,7 @@ print(arr[0])  # 10
             return;
         }
     }
-        
+
     cout << "Element not found" << endl;
 }`,
       python:`def search(arr, n, capacity, key):
@@ -204,7 +204,133 @@ print(arr[0])  # 10
             
 
     print("Element not found")`
+    },
+
+    reverse:{
+      java:`void reverse(int[] arr, int n, int capacity) {
+    for (int i = 0; i < n / 2; i++) {
+        int temp = arr[i];
+        arr[i] = arr[n - i - 1];
+        arr[n - i - 1] = temp;
     }
+}` ,
+   cpp:`void reverse(int arr[], int n, int capacity) {
+    for (int i = 0; i < n / 2; i++) {
+        int temp = arr[i];
+        arr[i] = arr[n - i - 1];
+        arr[n - i - 1] = temp;
+    }
+}`, 
+    python:`def reverse(arr, n, capacity):
+    for i in range(n // 2):
+
+        arr[i], arr[n - i - 1] = arr[n - i - 1], arr[i]
+        `
+
+    },
+
+   max: {
+  java: `void findMax(int[] arr, int n) {
+    if (n == 0) {
+        System.out.println("Array is empty");
+        return;
+    }
+
+    int max = arr[0];
+
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+
+    System.out.println("Max value: " + max);
+}`,
+
+  cpp: `void findMax(int arr[], int n) {
+    if (n == 0) {
+        cout << "Array is empty";
+        return;
+    }
+
+    int max = arr[0];
+
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+
+    cout << "Max value: " << max;
+}`,
+
+  python: `def findMax(arr, n):
+    if n == 0:
+        print("Array is empty")
+        return
+
+
+    max = arr[0]
+
+    for i in range(1, n):
+        if arr[i] > max:
+            max = arr[i]
+
+
+
+    print("Max value:", max)`
+},
+ min: {
+  java: `void findMin(int[] arr, int n) {
+    if (n == 0) {
+        System.out.println("Array is empty");
+        return;
+    }
+
+    int min = arr[0];
+
+    for (int i = 1; i < n; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+
+    System.out.println("Min value: " + min);
+}`,
+
+  cpp: `void findMin(int arr[], int n) {
+    if (n == 0) {
+        cout << "Array is empty";
+        return;
+    }
+
+    int min = arr[0];
+
+    for (int i = 1; i < n; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+
+    cout << "Min value: " << min;
+}`,
+
+  python: `def findMin(arr, n):
+    if n == 0:
+        print("Array is empty")
+        return
+
+
+    min = arr[0]
+
+    for i in range(1, n):
+        if arr[i] < min:
+            min = arr[i]
+            
+
+
+    print("Min value:", min)`
+}
 
 
   },

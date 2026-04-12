@@ -39,7 +39,7 @@ function generateDeletionSteps(array,n,setN,inputIndex,setOutput) {
       newArr[i] = {...newArr[i+1]};
       newArr[i+1] = {id: getKey(), state: "normal",value:null};
       lines.push(10);
-      messages.push(false);
+      messages.push(`Shifting elements to left # i = ${i}`);
       steps.push([...newArr]);
     }
 
@@ -63,7 +63,7 @@ function generateDeletionSteps(array,n,setN,inputIndex,setOutput) {
     return {stepsArr:steps,linesArr:lines,messagesArr:messages};
 }
 
-  export async function handleDeletion(array,setArray,stepArr,setStepArr,n,setN,inputIndex,setOutput,setCurrentLineArr,setMessage,setMessageArr){
+  export async function handleDeletion(array,setStepArr,n,setN,inputIndex,setOutput,setCurrentLineArr,setMessage,setMessageArr){
     setStepArr([]);
     setOutput("");
 

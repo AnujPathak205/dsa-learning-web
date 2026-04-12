@@ -1,5 +1,4 @@
-import { line } from "framer-motion/client";
-import { sleep,getKey } from "./helperFunctions";
+import { getKey } from "./helperFunctions";
 
 function generateInsertionSteps(array,n,setN,inputIndex,inputValue,setOutput) {
     let steps = [];
@@ -31,10 +30,10 @@ function generateInsertionSteps(array,n,setN,inputIndex,inputValue,setOutput) {
     messages.push("Shifting elements to right");
 
     for (let i = n-1; i >= inputIndex; i--) {
+      messages.push(`Shifting elements to right # i = ${i}`);
       newArr[i+1] = {...newArr[i]};
       newArr[i] = {id: getKey(), state: "unvisible"};
       lines.push(10);
-      messages.push(false);
       steps.push([...newArr]);
     }
 
@@ -63,7 +62,7 @@ function generateInsertionSteps(array,n,setN,inputIndex,inputValue,setOutput) {
     return {stepsArr:steps,linesArr:lines,messagesArr:messages};
 }
 
-  export async function handleInsertion(array,setArray,stepArr,setStepArr,n,setN,inputIndex,inputValue,setOutput,setCurrentLineArr,setMessage,setMessageArr){
+  export function handleInsertion(array,setStepArr,n,setN,inputIndex,inputValue,setOutput,setCurrentLineArr,setMessage,setMessageArr){
     setOutput("");
     setStepArr([]);
     if(inputValue == "" || inputIndex == ""){

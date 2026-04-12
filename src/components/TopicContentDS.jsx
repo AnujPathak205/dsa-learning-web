@@ -6,7 +6,10 @@ import {
   BookOpen,
   Brain,
   Rocket,
-  PlayCircle
+  PlayCircle,
+  Settings,
+  Clock,
+  Globe
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
@@ -28,24 +31,33 @@ export default function TopicContentDS({ data, visualPath }) {
           </p>
         </div>
 
-        {/* 🔥 MAIN CONTENT (MERGED SECTION) */}
-        <section className="space-y-10">
+        {/* 🔥 MERGED CONCEPT BOX */}
+        <section
+          className="rounded-2xl p-6 md:p-8 
+          bg-white/80 dark:bg-slate-800/70 
+          backdrop-blur-md
+          border border-slate-200 dark:border-slate-700
+          shadow-md space-y-8"
+        >
+          {/* Header */}
+          <div className="flex items-center gap-2 text-xl font-semibold text-slate-800 dark:text-white">
+            <BookOpen className="w-5 h-5 text-indigo-500" />
+            Concept Overview
+          </div>
 
-          {/* Explanation */}
+          {/* 🔹 Explanation */}
           <div>
-            <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-800 dark:text-white mb-3">
-              <BookOpen className="w-5 h-5 text-indigo-500" />
-              Concept
-            </h2>
-
             <p className="text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
               {data.explanation}
             </p>
           </div>
 
-          {/* Operations */}
+          <div className="border-t border-slate-200 dark:border-slate-700" />
+
+          {/* 🔹 Operations */}
           <div>
-            <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200 mb-3">
+            <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-800 dark:text-white mb-3">
+              <Settings className="w-4 h-4 text-indigo-500" />
               Key Operations
             </h3>
 
@@ -54,8 +66,9 @@ export default function TopicContentDS({ data, visualPath }) {
                 <div
                   key={index}
                   className="flex items-start gap-3 p-3 rounded-lg 
-                  bg-slate-50 dark:bg-slate-800/60
-                  border border-slate-200 dark:border-slate-700"
+                  bg-slate-50 dark:bg-slate-900/50
+                  border border-slate-200 dark:border-slate-700
+                  hover:shadow-sm transition"
                 >
                   <span className="text-indigo-500 font-semibold">
                     {index + 1}.
@@ -74,38 +87,58 @@ export default function TopicContentDS({ data, visualPath }) {
             </div>
           </div>
 
-          {/* Complexity */}
-          <div>
-            <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200 mb-3">
-              Time Complexity
-            </h3>
+          <div className="border-t border-slate-200 dark:border-slate-700" />
 
-            <div className="flex flex-wrap gap-3">
-              {data.complexity.map((op, index) => (
-                <div
-                  key={index}
-                  className="px-4 py-2 rounded-lg 
-                  bg-indigo-50 dark:bg-indigo-900/30
-                  text-indigo-700 dark:text-indigo-300
-                  text-sm font-medium"
-                >
-                  {op.opName}: {op.TC}
-                </div>
-              ))}
+          {/* 🔹 Complexity + Real Life */}
+          <div className="grid md:grid-cols-2 gap-6">
+
+            {/* Time Complexity */}
+            <div>
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-800 dark:text-white mb-3">
+                <Clock className="w-4 h-4 text-indigo-500" />
+                Time Complexity
+              </h3>
+
+              <div className="space-y-2">
+                {data.complexity.map((op, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-between items-center 
+                    px-3 py-2 rounded-lg
+                    bg-indigo-50 dark:bg-indigo-900/30
+                    border border-indigo-100 dark:border-indigo-800
+                    text-sm"
+                  >
+                    <span className="text-slate-700 dark:text-slate-200">
+                      {op.opName}
+                    </span>
+
+                    <span className="font-semibold text-indigo-600 dark:text-indigo-300">
+                      {op.TC}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Real Life */}
+            <div>
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-800 dark:text-white mb-3">
+                <Globe className="w-4 h-4 text-indigo-500" />
+                Real-Life Use
+              </h3>
+
+              <div
+                className="p-4 rounded-lg 
+                bg-slate-50 dark:bg-slate-900/50
+                border border-slate-200 dark:border-slate-700
+                text-sm text-slate-600 dark:text-slate-300 leading-relaxed"
+              >
+                {data.realLifeExample}
+              </div>
+            </div>
+
           </div>
-
-          {/* Real Life */}
-          <div>
-            <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-200 mb-3">
-              Real-Life Use
-            </h3>
-
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-              {data.realLifeExample}
-            </p>
-          </div>
-
         </section>
 
         {/* 🔥 VISUAL CTA */}

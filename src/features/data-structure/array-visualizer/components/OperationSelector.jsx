@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function OperationSelector({operation,setOperation,setCurrentLine}) {
-    const [createArr,setCreateArr] = useState(false);
 
   return (
     <>

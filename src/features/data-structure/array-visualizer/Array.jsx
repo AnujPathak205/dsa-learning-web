@@ -12,8 +12,7 @@ import { handleMax } from "./logic/max";
 import { handleMin } from "./logic/min";
 import ArrayHeader from "./components/ArrayHeader";
 import OperationSelector from "./components/OperationSelector";
-
-const MAX_CAPACITY = 12;
+import ArrayCreator from "../../../components/ArrayCreator";
 
 export default function Array() {
   const initialArr = [
@@ -52,6 +51,8 @@ export default function Array() {
   const [speed, setSpeed] = useState(1000);
   const [step, setStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const [createArr,setCreateArr] = useState(false);
 
   useEffect(() => {
     if(isPlaying){
@@ -221,8 +222,11 @@ export default function Array() {
                 currentLine={currentLine}
               />
             ) :
-              <ArrayHeader />
-            }
+              !createArr ? 
+                <ArrayHeader setCreateArr={setCreateArr} />
+                :
+                <ArrayCreator setArray={setArray} setN = {setN} setCreateArr={setCreateArr} setMessage={setMessage}/>
+              }
             
           </div>
 
@@ -249,8 +253,6 @@ export default function Array() {
                 : `Operation: ${operation}`}
                  &nbsp; (capacity = {array.length} , n = {n})
             </h2>
-
-            
 
             {/* INPUTS */}
             <div className="flex gap-6 flex-wrap">

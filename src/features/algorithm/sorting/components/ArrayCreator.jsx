@@ -1,95 +1,79 @@
-import { useState, useEffect } from "react";
-import { sleep } from "../features/data-structure/array-visualizer/logic/helperFunctions";
+import { useState } from "react";
+import { sleep } from "../logic/helperFunctions";
 
 const MAX_CAPACITY = 12;
 
-export default function ArrayCreator({ setArray, setN, setCreateArr, setMessage }) {
-  const [capacity, setCapacity] = useState(12);
-  const [noOfElement, setNoOfElement] = useState(8);
+export default function ArrayCreator({ setArray, setCreateArr, setMessage }) {
+  const [capacity, setCapacity] = useState(8);
   const [takingUserValues, setTakingUserValues] = useState(false);
   const [values, setValues] = useState([]);
-
-  // useEffect(() => {
-  //   setN(noOfElement);
-  // }, [noOfElement]);
 
   async function generateRandomArray() {
     let newArr = [];
 
+    // create empty array
     for (let i = 0; i < capacity; i++) {
       newArr[i] = { id: i, value: null, state: "created" };
     }
 
     setArray([...newArr]);
-    await sleep(400);
+    await sleep(300);
 
-    for (let i = 0; i < noOfElement; i++) {
+    // fill values
+    for (let i = 0; i < capacity; i++) {
       newArr[i].value = Math.floor(Math.random() * 100);
       newArr[i].state = "found";
       setArray([...newArr]);
-      await sleep(200);
+      await sleep(150);
     }
 
-    await sleep(400);
+    await sleep(300);
 
-    setMessage(
-      `Choose an operation to start visualization # capacity = ${capacity} # no of elements(n) = ${noOfElement}`
-    );
+    setMessage(`Start sorting visualization # size = ${capacity}`);
 
+    // reset states
     for (let i = 0; i < capacity; i++) {
       newArr[i].state = "normal";
     }
 
     setArray([...newArr]);
     setCreateArr(false);
-    setN(noOfElement);
-
   }
 
   async function handleManualSubmit() {
     let newArr = [];
 
+    // create base array
     for (let i = 0; i < capacity; i++) {
-      newArr[i] = {
-        id: i,
-        value:null,
-        state: "created",
-      };
+      newArr[i] = { id: i, value: null, state: "created" };
     }
 
+    setArray([...newArr]);
     await sleep(300);
-    setArray([...newArr]);
 
-    for (let i = 0; i < noOfElement; i++) {
-      newArr[i] = {
-        id: i,
-        value: Number(values[i]) ,
-        state: "found",
-      };
-    setArray([...newArr]);
-    await sleep(180);
+    // fill user values
+    for (let i = 0; i < capacity; i++) {
+      newArr[i].value = Number(values[i]);
+      newArr[i].state = "found";
+      setArray([...newArr]);
+      await sleep(150);
     }
 
     await sleep(300);
 
+    setMessage(`Start sorting visualization # size = ${capacity}`);
 
-    setMessage(
-      `Choose an operation to start visualization # capacity = ${capacity} # no of elements(n) = ${noOfElement}`
-    );
-
+    // reset states
     for (let i = 0; i < capacity; i++) {
       newArr[i].state = "normal";
     }
 
     setArray([...newArr]);
-
-    setN(noOfElement);
-
     setCreateArr(false);
   }
 
   return (
-    <div className="max-w-2xl mx-auto  py-6 
+    <div className="max-w-2xl mx-auto py-6 
       bg-white/80 dark:bg-slate-800/70 
       backdrop-blur-md rounded-2xl px-2 space-y-6">
 
@@ -106,78 +90,49 @@ export default function ArrayCreator({ setArray, setN, setCreateArr, setMessage 
           {/* TITLE */}
           <div>
             <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
-              Create Array
+              Create Array for Sorting
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Define the size and number of elements for your array.
+              Define the number of elements (array size).
             </p>
           </div>
 
-          {/* INFO BOX */}
+          {/* INFO */}
           <div className="p-4 rounded-lg 
             bg-indigo-50 dark:bg-slate-900/50
             border border-indigo-100 dark:border-slate-700 text-sm">
 
             <p className="text-slate-700 dark:text-slate-300">
-              <span className="font-semibold text-indigo-600">Capacity</span> = Total slots available in array  
+              Sorting algorithms work on a fully filled array.
             </p>
             <p className="text-slate-700 dark:text-slate-300 mt-1">
-              <span className="font-semibold text-green-600">n</span> = Number of elements currently stored
+              Choose a size and generate values.
             </p>
           </div>
 
-          {/* INPUTS */}
-          <div className="space-y-5">
+          {/* INPUT */}
+          <div>
+            <label className="text-sm font-medium text-slate-600 dark:text-slate-300">
+              Array Size (1 - {MAX_CAPACITY})
+            </label>
 
-            {/* Capacity */}
-            <div>
-              <label className="text-sm font-medium text-slate-600 dark:text-slate-300">
-                Capacity (use only 1 - {MAX_CAPACITY})
-              </label>
-
-              <input
-                type="number"
-                value={capacity}
-                min={1}
-                max={MAX_CAPACITY}
-                onChange={(e) => {
-                  let val = Number(e.target.value);
-                  if (val > MAX_CAPACITY) return;
-                  setCapacity(val);
-                  if (noOfElement > val) setNoOfElement(val);
-                }}
-                className="ml-2 mt-2 px-3 py-2 rounded-lg border
-                  bg-slate-50 dark:bg-slate-700 dark:text-white"
-              />
-
-            </div>
-
-            {/* n */}
-            <div>
-              <label className="text-sm font-medium text-slate-600 dark:text-slate-300">
-                Number of Elements  ( n )
-              </label>
-
-              <input
-                type="number"
-                value={noOfElement}
-                min={0}
-                max={capacity}
-                onChange={(e) => {
-                  let val = Number(e.target.value);
-                  if (val > capacity) return;
-                  setNoOfElement(val);
-                }}
-                className="ml-2 mt-2 px-3 py-2 rounded-lg border
-                  bg-slate-50 dark:bg-slate-700 dark:text-white"
-              />
-            </div>
-
+            <input
+              type="number"
+              value={capacity}
+              min={1}
+              max={MAX_CAPACITY}
+              onChange={(e) => {
+                let val = Number(e.target.value);
+                if (val > MAX_CAPACITY) return;
+                setCapacity(val);
+              }}
+              className="ml-3 px-3 py-2 rounded-lg border
+                bg-slate-50 dark:bg-slate-700 dark:text-white"
+            />
           </div>
 
           {/* BUTTONS */}
           <div className="flex gap-4">
-
             <button
               onClick={generateRandomArray}
               className="flex-1 py-2.5 rounded-xl 
@@ -189,7 +144,7 @@ export default function ArrayCreator({ setArray, setN, setCreateArr, setMessage 
 
             <button
               onClick={() => {
-                setValues(Array(noOfElement).fill(""));
+                setValues(Array(capacity).fill(""));
                 setTakingUserValues(true);
               }}
               className="flex-1 py-2.5 rounded-xl 
@@ -198,7 +153,6 @@ export default function ArrayCreator({ setArray, setN, setCreateArr, setMessage 
             >
               Enter Manually
             </button>
-
           </div>
         </>
       ) : (
@@ -209,12 +163,11 @@ export default function ArrayCreator({ setArray, setN, setCreateArr, setMessage 
           </h1>
 
           <p className="text-sm text-slate-500">
-            Capacity = {capacity}, n = {noOfElement}
+            Size = {capacity}
           </p>
 
           {/* INPUT GRID */}
           <div className="grid grid-cols-4 gap-3">
-
             {values.map((val, idx) => (
               <input
                 key={idx}
@@ -230,12 +183,10 @@ export default function ArrayCreator({ setArray, setN, setCreateArr, setMessage 
                 placeholder={`a${idx}`}
               />
             ))}
-
           </div>
 
           {/* ACTIONS */}
           <div className="flex gap-4">
-
             <button
               onClick={handleManualSubmit}
               className="flex-1 py-2.5 rounded-xl 
@@ -251,7 +202,6 @@ export default function ArrayCreator({ setArray, setN, setCreateArr, setMessage 
             >
               Cancel
             </button>
-
           </div>
         </>
       )}

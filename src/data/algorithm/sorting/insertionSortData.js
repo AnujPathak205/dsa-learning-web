@@ -16,23 +16,21 @@ It takes each element and inserts it into its correct position in the already so
   ],
 
   code: {
-    java: `public class InsertionSort {
-    public static void insertionSort(int[] arr) {
-        int n = arr.length;
+    java: `public static void insertionSort(int[] arr) {
+      int n = arr.length;
 
-        for(int i = 1; i < n; i++) {
-            int key = arr[i];
-            int j = i - 1;
+      for(int i = 1; i < n; i++) {
+          int key = arr[i];
+          int j = i - 1;
 
-            while(j >= 0 && arr[j] > key) {
-                arr[j + 1] = arr[j];
-                j--;
-            }
+          while(j >= 0 && arr[j] > key) {
+              arr[j + 1] = arr[j];
+              j--;
+          }
 
-            arr[j + 1] = key;
-        }
-    }
-}`,
+          arr[j + 1] = key;
+      }
+  }`,
 
     cpp: `#include <iostream>
 using namespace std;

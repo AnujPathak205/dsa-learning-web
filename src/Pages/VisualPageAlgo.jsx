@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { topics } from "../data/algorithm/topics";
+import PageNotFoundPage from "./PageNotFoundPage";
 
 import SortingVisual from "../features/algorithm/sorting/SortingVisual";
-import { div } from "framer-motion/client";
 
 export default function VisualPageAlgo() {
-  const {topicId,subTopicId} = useParams();
+  const {topicId} = useParams();
   
-    const filteredTopics = topics.filter((t) => t.id === subTopicId && t.type === topicId );
+    const filteredTopics = topics.filter((t) => t.type === topicId );
     
     if (!filteredTopics.length) {
       return <PageNotFoundPage />;

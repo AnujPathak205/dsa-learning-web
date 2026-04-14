@@ -10,7 +10,9 @@ function App() {
       return localStorage.getItem("theme") === "dark";
     });
 
-    const match = useMatch("/topics/data-structures/:topicId/visual");
+    const match1 =  useMatch("/topics/data-structures/:topicId/visual")
+    const match2 = useMatch("/topics/algorithms/:topicId/visual");
+    const match = match1 || match2;
 
     useEffect(() => {
       if (dark) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ArrayDisplay from "./components/ArrayDisplay";
+import ArrayDisplay from "../../../components/ArrayDisplay";
 import { arrayData } from "../../../data/data-structure/ArrayData";
 import CodeVisual from "../../../components/CodeVisual";
 import PlayBar from "../../../components/PlayBar";
@@ -12,7 +12,8 @@ import { handleMax } from "./logic/max";
 import { handleMin } from "./logic/min";
 import ArrayHeader from "./components/ArrayHeader";
 import OperationSelector from "./components/OperationSelector";
-import ArrayCreator from "../../../components/ArrayCreator";
+import ArrayCreator from "./components/ArrayCreator";
+import { div } from "framer-motion/client";
 
 export default function Array() {
   const initialArr = [
@@ -134,7 +135,7 @@ export default function Array() {
     <div className="h-screen flex flex-col bg-gray-100 dark:bg-slate-900">
 
       {/* 🔥 MAIN CONTENT */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4 p-4 overflow-hidden">
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1.2fr_0.9fr] gap-4 p-4 overflow-hidden">
 
         {/* 🔹 LEFT */}
         <div className="flex flex-col justify-center items-center bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4">
@@ -234,17 +235,43 @@ export default function Array() {
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 flex flex-col gap-4">
 
             {operation !== "none" && !tasking && (
-              <button
-                disabled={isDisabled}
-                onClick={() => setOperation("none")}
-                className={`w-fit px-3 py-1 rounded  text-white 
-                  ${
-                    isDisabled ? "bg-gray-400" : "bg-slate-500 hover:bg-slate-600"
-                  }    
-                `}
-              >
-                ← Back
-              </button>
+              <div className="w-full flex justify-between items-center">
+
+                {/* LEFT - Back */}
+                <button
+                  disabled={isDisabled}
+                  onClick={() => setOperation("none")}
+                  className={`
+                    px-3 py-1.5 rounded-lg text-sm font-medium text-white
+                    transition-all duration-200
+                    ${
+                      isDisabled
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-slate-500 hover:bg-slate-600 active:scale-95"
+                    }
+                  `}
+                >
+                  ← Back
+                </button>
+
+                {/* RIGHT - Quit */}
+                <button
+                  disabled={!isDisabled}
+                  onClick={onQuit}
+                  className={`
+                    px-3 py-1.5 rounded-lg text-sm font-medium text-white
+                    transition-all duration-200
+                    ${
+                      !isDisabled
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-red-500 hover:bg-red-600 active:scale-95 shadow-sm hover:shadow-md"
+                    }
+                  `}
+                >
+                  Quit
+                </button>
+
+              </div>
             )}
 
             <h2 className="text-lg font-semibold text-slate-800 dark:text-white">

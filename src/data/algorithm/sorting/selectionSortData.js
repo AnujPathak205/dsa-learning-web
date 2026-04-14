@@ -16,25 +16,23 @@ It divides the array into sorted and unsorted parts and grows the sorted portion
   ],
 
   code: {
-    java: `public class SelectionSort {
-    public static void selectionSort(int[] arr) {
-        int n = arr.length;
+    java: `public static void selectionSort(int[] arr) {
+      int n = arr.length;
 
-        for(int i = 0; i < n - 1; i++) {
-            int minIndex = i;
+      for(int i = 0; i < n - 1; i++) {
+          int minIndex = i;
 
-            for(int j = i + 1; j < n; j++) {
-                if(arr[j] < arr[minIndex]) {
-                    minIndex = j;
-                }
-            }
+          for(int j = i + 1; j < n; j++) {
+              if(arr[j] < arr[minIndex]) {
+                  minIndex = j;
+              }
+          }
 
-            int temp = arr[minIndex];
-            arr[minIndex] = arr[i];
-            arr[i] = temp;
-        }
-    }
-}`,
+          int temp = arr[minIndex];
+          arr[minIndex] = arr[i];
+          arr[i] = temp;
+      }
+  }`,
 
     cpp: `#include <iostream>
 using namespace std;

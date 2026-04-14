@@ -31,7 +31,7 @@ export default function SubTopicPageAlgo() {
 
   return (
     <>
-       <TopicContentAlgo data={data[index]} algoName={topicId} visualPath={subTopicId} />
+       <TopicContentAlgo data={data[index]} algoName={topicId} />
     </>
   )
 }

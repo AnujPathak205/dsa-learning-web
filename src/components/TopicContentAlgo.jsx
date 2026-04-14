@@ -14,7 +14,7 @@ import {
   HelpCircle
 } from "lucide-react";
 
-export default function TopicContentAlgo({ data,algoName,visualPath }) {
+export default function TopicContentAlgo({ data,algoName}) {
   return (
     <div className="flex justify-center mt-6 px-4">
       <div className="w-full max-w-4xl flex flex-col gap-6">
@@ -114,7 +114,7 @@ export default function TopicContentAlgo({ data,algoName,visualPath }) {
 
           <Link
             id="Code"
-            to={`/topics/algorithms/${algoName}/${visualPath}/visual`}
+            to={`/topics/algorithms/${algoName}/visual`}
             className="inline-block px-6 py-2 rounded-lg 
             bg-white text-indigo-600 font-medium 
             hover:bg-gray-100 transition"

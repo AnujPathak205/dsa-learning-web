@@ -223,8 +223,9 @@ print(arr[0])  # 10
 }`, 
     python:`def reverse(arr, n, capacity):
     for i in range(n // 2):
-
-        arr[i], arr[n - i - 1] = arr[n - i - 1], arr[i]
+        temp = arr[i]
+        arr[i] = arr[n-i-1]
+        arr[n-i-1] = temp 
         `
 
     },

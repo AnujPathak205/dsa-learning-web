@@ -55,7 +55,7 @@ export default function AppRoutes() {
                   element={<SubTopicPageAlgo />}
              />
 
-             <Route path='/topics/algorithms/:topicId/:subTopicId/visual'
+             <Route path='/topics/algorithms/:topicId/visual'
                   element={<VisualPageAlgo />}
              />
 

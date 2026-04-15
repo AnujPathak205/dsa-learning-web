@@ -56,7 +56,7 @@ function generateDeletionSteps(array,n,setN,inputIndex,setOutput) {
 
     steps.push([...newArr]);
     lines.push(14);
-    messages.push(false);
+    messages.push("Deletion completed");
 
     setN(prev => prev-1);
 

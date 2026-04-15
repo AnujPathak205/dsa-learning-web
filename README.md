@@ -179,7 +179,7 @@ src/
 ---
 
 ## Demo Preview
-> (![alt text](image.png))
+> (![alt text](c:\Users\anujp\OneDrive\Desktop\ArrayVisualizerVideo.mp4))
 
 ---
 

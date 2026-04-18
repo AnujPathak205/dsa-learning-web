@@ -65,7 +65,7 @@ export default function Navbar({ dark, setDark }) {
         </button>
       </div>
 
-      {/* 🔥 MOBILE MENU (UNCHANGED) */}
+      {/* MOBILE MENU (UNCHANGED) */}
       {menuOpen && (
         <div
           className="fixed inset-0 z-50 flex items-end 

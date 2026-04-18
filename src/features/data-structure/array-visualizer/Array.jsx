@@ -14,6 +14,8 @@ import ArrayHeader from "./components/ArrayHeader";
 import OperationSelector from "./components/OperationSelector";
 import ArrayCreator from "./components/ArrayCreator";
 import { div } from "framer-motion/client";
+import MessageBox from "../../../components/MessageBox";
+import OutputBox from "../../../components/OutputBox";
 
 export default function Array() {
   const initialArr = [
@@ -134,80 +136,18 @@ export default function Array() {
   return (
     <div className="h-screen flex flex-col bg-gray-100 dark:bg-slate-900">
 
-      {/* 🔥 MAIN CONTENT */}
+      {/*  MAIN CONTENT */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1.2fr_0.9fr] gap-4 p-4 overflow-hidden">
+        
 
-        {/* 🔹 LEFT */}
+        {/*  LEFT */}
         <div className="flex flex-col justify-center items-center bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4">
           <ArrayDisplay array={array} />
 
-          <div
-            className="mt-4 w-full text-center px-4 py-2 rounded-lg 
-            bg-blue-100 dark:bg-slate-700 
-            text-blue-800 dark:text-blue-300 text-sm"
-          >
-            {typeof message === "string" && (() => {
-              const parts = message.split("#");
+         <MessageBox message={message} />
 
-              return (
-                <>
-                  {/* 🔹 First Line */}
-                  <div className="w-full">
-                    {parts[0]}
-                  </div>
-
-                  {/* 🔹 Second Line */}
-                  {parts.length > 1 && (
-                    <div className="w-full mt-1 flex flex-wrap justify-center gap-2">
-                      {parts.slice(1).map((part, index) => (
-                        <span
-                          key={index}
-                          className="px-2 py-0.5 rounded 
-                          bg-blue-200 dark:bg-slate-600 
-                          text-blue-900 dark:text-blue-200 
-                          font-medium"
-                        >
-                          {part.trim()}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </>
-              );
-            })()}
-          </div>
           {outputValue.length !== 0 && (
-            <div className="
-              mt-2 w-full
-              rounded-xl
-              border border-slate-300 dark:border-slate-600
-              bg-slate-50 dark:bg-slate-900
-              shadow-inner
-              overflow-hidden
-            ">
-              
-              <div className="
-                px-2 py-2
-                bg-slate-200 dark:bg-slate-800
-                border-b border-slate-300 dark:border-slate-600
-                text-xs font-semibold
-                text-slate-700 dark:text-slate-300
-                tracking-wide
-              ">
-                OUTPUT
-              </div>
-
-              {/* Content */}
-              <div className="
-                px-4 py-2
-                text-center
-                text-lg font-mono
-                text-slate-900 dark:text-slate-100
-              ">
-                {outputValue}
-              </div>
-
-            </div>
+            <OutputBox outputValue={outputValue} />
           )}
         </div>
 
@@ -335,7 +275,7 @@ export default function Array() {
         </div>
       </div>
 
-      {/* 🔥 PLAYER BAR (SLIM & COMPACT FOR ALL SCREENS) */}
+      {/* PLAYER BAR (SLIM & COMPACT FOR ALL SCREENS) */}
       <PlayBar isPlaying={isPlaying} setIsPlaying={setIsPlaying} step={step} setStep={setStep} speed={speed} setSpeed={setSpeed} totalSteps={totalSteps} onQuit={onQuit}/>
       
     </div>

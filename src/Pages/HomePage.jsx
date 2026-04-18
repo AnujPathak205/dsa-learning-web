@@ -21,8 +21,8 @@ export default function HomePage() {
   return (
     <div className="w-full">
 
-      {/* 🔥 HERO SECTION */}
-      <div className="relative min-h-screen pt-10 pb-10 flex items-center justify-center overflow-hidden 
+      {/* HERO SECTION */}
+      <div className="relative min-h-screen pt-40 pb-10 flex items-center justify-center overflow-hidden 
       bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
 
         {/* Glow Background */}
@@ -98,8 +98,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* 🔽 FIXED SCROLL INDICATOR */}
-        <div className="absolute bottom-25 left-1/2 -translate-x-1/2 
+        {/* FIXED SCROLL INDICATOR */}
+        <div onClick={scrollToExplore} className="absolute bottom-5 left-1/2 -translate-x-1/2 
         flex flex-col items-center text-slate-400 opacity-80">
 
           <span className="text-xs mb-1">Scroll</span>
@@ -109,12 +109,12 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 🔥 TRANSITION */}
-      <div className="h-20 bg-gradient-to-b from-slate-900 to-slate-100 dark:to-slate-900"></div>
+      {/* TRANSITION */}
+      <div  ref={exploreRef} className="mb-10"></div>
 
-      {/* 🔥 VISUALIZER SECTION */}
+      {/* VISUALIZER SECTION */}
       <div
-        ref={exploreRef}
+       
         className="min-h-screen px-4 py-16 bg-slate-100 dark:bg-slate-900 flex flex-col items-center"
       >
         <h2 className="text-2xl sm:text-3xl font-bold mb-10 text-slate-800 dark:text-white">
@@ -151,7 +151,7 @@ export default function HomePage() {
               Sorting Visualizer
             </h3>
             <p className="text-sm text-slate-500 dark:text-slate-400">
-              Understand Bubble, Selection and more with live animations.
+              Understand Bubble, Selection and Insertion sort with live animations.
             </p>
 
             <div className="mt-4 text-indigo-500 text-sm font-medium">

@@ -1,7 +1,9 @@
 import React from 'react'
 import MessageBox from '../../../../components/MessageBox';
 
-export default function Operations({linkedlist,operation,setOperation,message}) {
+export default function Operations({linkedlist,operation,setOperation,message,inputValue,setInputValue,inputIndex,setInputIndex,handleStart,onQuit,isRunning}) {
+    let isDisabled = isRunning;
+
   return (
     <div>
       {/* OPERATION SELECTORS */}
@@ -28,7 +30,7 @@ export default function Operations({linkedlist,operation,setOperation,message}) 
 
                     <select
                         value={
-                        ["addFirst", "addLast", "add"].includes(operation)
+                        ["addFirst", "addLast", "add", "removeFirst","removeLast","remove","traverse"].includes(operation)
                             ? operation
                             : ""
                         }
@@ -46,6 +48,10 @@ export default function Operations({linkedlist,operation,setOperation,message}) 
                         <option value="addFirst">Add First</option>
                         <option value="addLast">Add Last</option>
                         <option value="add">Add at any index</option>
+                        <option value="removeFirst">Remove First</option>
+                        <option value="removeLast">Remove Last</option>
+                        <option value="remove">Remove at any index</option>
+                        <option value="traverse">Traverse</option>
                     </select>
                     </div>
 
@@ -84,24 +90,87 @@ export default function Operations({linkedlist,operation,setOperation,message}) 
                         
                 (
                     <div>
-                        <button
-                            onClick={() => setOperation("none")}
-                            className={`
-                                px-3 py-1.5 rounded-lg text-sm font-medium text-white
-                                transition-all duration-200 mb-3
-                                ${
-                                false
-                                    ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-slate-500 hover:bg-slate-600 active:scale-95"
-                                }
-                            `}
-                        >
-                             ← Back
-                        </button>
+                        <div className='flex justify-between items-center w-full'>
+                            <button
+                                onClick={() => setOperation("none")}
+                                className={`
+                                    px-3 py-1.5 rounded-lg text-sm font-medium text-white
+                                    transition-all duration-200 mb-3
+                                    ${
+                                    isDisabled
+                                        ? "bg-gray-400 cursor-not-allowed"
+                                        : "bg-slate-500 hover:bg-slate-600 active:scale-95"
+                                    }
+                                `}
+                            >
+                                ← Back
+                            </button>
+
+                            <button
+                                disabled={!isDisabled}
+                                onClick={onQuit}
+                                className={`
+                                    px-3 py-1.5 rounded-lg text-sm font-medium text-white
+                                    transition-all duration-200
+                                    ${
+                                    !isDisabled
+                                        ? "bg-gray-400 cursor-not-allowed"
+                                        : "bg-red-500 hover:bg-red-600 active:scale-95 shadow-sm hover:shadow-md"
+                                    }
+                                `}
+                            >
+                                Quit
+                            </button>
+                        </div>
+
                         <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-10">
                             Operation: {operation}
                             &nbsp; (size = {linkedlist.length-1})
                         </h2>
+                        {/* INPUTS */}
+                        <div className="flex gap-6 flex-wrap">
+
+                        {(operation === "addFirst" || operation === "addLast" || operation === "add") && (
+                            <div>
+                                <label className="text-xs text-slate-500 dark:text-slate-400">
+                                    Input Value &nbsp;
+                                </label>
+                                <input
+                                    type="number"
+                                    value={inputValue}
+                                    // disabled={isDisabled}
+                                    onChange={(e) => setInputValue(Number(e.target.value))}
+                                    className="w-16 px-3 py-1 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white
+                                    disabled:opacity-50"
+                                />
+                            </div>
+                        )}
+
+                        {(operation === "add") && (
+                            <div>
+                            <label className="text-xs text-slate-500 dark:text-slate-400">
+                                Target Index &nbsp;
+                            </label>
+                            <input
+                                type="number"
+                                value={inputIndex}
+                                // disabled={isDisabled}
+                                onChange={(e) => setInputIndex(Number(e.target.value))}
+                                className="w-16 px-3 py-1 rounded border bg-gray-50 dark:bg-slate-700 dark:text-white
+                                disabled:opacity-50"
+                            />
+                            </div>
+                        )}
+                        </div>
+                        <button
+                            onClick={handleStart}
+                            disabled={isDisabled}
+                            className={`w-full py-2  rounded-lg text-white mt-12  ${
+                            isDisabled ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
+                            }`}
+                        >
+                            {isDisabled ? "Running..." : "Start Visualization"}
+                        </button>
                     </div>
                 )
             }

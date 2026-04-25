@@ -128,23 +128,215 @@ class Node:
 
   size++;
 }
-`,   python:`def add_first(self, data):
+`,   python:`def addFirst(self, data):
   # 1. Create new node
-  new_node = Node(data)
+  newNode = Node(data)
 
   if self.head is None:
-      self.head = self.tail = new_node
+      self.head = self.tail = newNode
       self.size += 1
       return
 
-  # 2. new_node.next = head
-  new_node.next = self.head
+  # 2. newNode.next = head
+  newNode.next = self.head
 
   # 3. head = new_node
   self.head = new_node
 
   self.size += 1`
+  },
+
+  addLast:{
+  java:`public void addLast(int data){
+  // 1. Creating new Node
+  Node newNode = new Node(data);
+
+  if(head == null){
+      head = tail = newNode;
+      size++;
+      return;
   }
+
+  // 2. tail.next <- newNode
+  tail.next = newNode;
+
+  // 3. tail <- newNode
+  tail = newNode;
+
+  size++;
+}
+`,
+
+  cpp:`void addLast(int data){
+  // 1. Creating new Node
+  Node* newNode = new Node(data);
+
+  if(head == nullptr){
+      head = tail = newNode;
+      size++;
+      return;
+  }
+
+  // 2. tail->next = newNode
+  tail->next = newNode;
+
+  // 3. tail = newNode
+  tail = newNode;
+
+  size++;
+}
+`,
+
+  python:`def addLast(self, data):
+  # 1. Creating new Node
+  newNode = Node(data)
+
+  if self.head is None:
+      self.head = self.tail = newNode
+      self.size += 1
+      return
+
+  # 2. tail.next = newNode
+  self.tail.next = newNode
+
+  # 3. tail = newNode
+  self.tail = newNode
+
+  self.size += 1`
+},
+
+removeFirst:{
+  java:`public void removeFirst(){
+  if(head == null){
+      System.out.println("List is already empty");
+      return;
+  }
+
+  // 1. head <- head.next
+  head = head.next;
+
+  // 2. if list becomes empty
+  if(head == null){
+      tail = null;
+  }
+
+  size--;
+}
+`,
+
+  cpp:`void removeFirst(){
+  if(head == nullptr){
+      cout << "List is already empty" << endl;
+      return;
+  }
+
+  // 1. head = head->next
+  head = head->next;
+
+  // 2. if list becomes empty
+  if(head == nullptr){
+      tail = nullptr;
+  }
+
+  size--;
+}
+`,
+
+  python:`def removeFirst(self):
+  if self.head is None:
+      print("List is already empty")
+      return
+
+  # 1. head = head.next
+  self.head = self.head.next
+
+  # 2. if list becomes empty
+  if self.head is None:
+      self.tail = None
+
+  self.size -= 1`
+},
+
+removeLast:{
+  java:`public void removeLast(){
+  if(head == null){
+      System.out.println("List is already empty");
+      return;
+  }
+
+  if(head == tail){
+      head = tail = null;
+      size--;
+      return;
+  }
+
+  // 1. Traverse to second last node
+  Node node = head;
+  while(node.next != tail){
+      node = node.next;
+  }
+
+  // 2. node.next <- null
+  node.next = null;
+
+  // 3. tail <- node
+  tail = node;
+
+  size--;
+}
+`,
+
+  cpp:`void removeLast(){
+  if(head == nullptr){
+      cout << "List is already empty" << endl;
+      return;
+  }
+
+  if(head == tail){
+      head = tail = nullptr;
+      size--;
+      return;
+  }
+
+  // 1. Traverse to second last node
+  Node* node = head;
+  while(node->next != tail){
+      node = node->next;
+  }
+
+  // 2. node->next = nullptr
+  node->next = nullptr;
+
+  // 3. tail = node
+  tail = node;
+
+  size--;
+}
+`,
+
+  python:`def removeLast(self):
+  if self.head is None:
+      print("List is already empty")
+      return
+
+  if self.head == self.tail:
+      self.head = self.tail = None
+      self.size -= 1
+      return
+
+  # 1. Traverse to second last node
+  node = self.head
+  while node.next != self.tail:
+      node = node.next
+
+  # 2. node.next = None
+  node.next = None
+
+  # 3. tail = node
+  self.tail = node
+
+  self.size -= 1`
+}
   },
 
   realLifeExample: `

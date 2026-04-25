@@ -44,13 +44,14 @@ export default function Array() {
   const [operation, setOperation] = useState("none");
 
   const [message, setMessage] = useState("Choose an operation to start visualization");
-  const [messageArr, setMessageArr] = useState("Choose an operation to start visualization");
+  const [messageArr, setMessageArr] = useState();
 
 
   const [tasking, setTasking] = useState(false);
   const [currentLine, setCurrentLine] = useState(-1);
   const [currentLineArr,setCurrentLineArr] = useState([]);
 
+  
   const [speed, setSpeed] = useState(1000);
   const [step, setStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -76,7 +77,7 @@ export default function Array() {
         if(messageArr[step]) setMessage(messageArr[step]);
         setStep((prev) => prev + 1);
       }, speed);
-      
+
       return () => clearTimeout(timer);
     }else{
       if(step == 0) return;
@@ -150,7 +151,7 @@ export default function Array() {
           )}
         </div>
 
-        {/* 🔹 RIGHT */}
+        {/* RIGHT */}
         <div className="flex flex-col gap-4 overflow-hidden">
 
           {/*  CODE / INTRO */}

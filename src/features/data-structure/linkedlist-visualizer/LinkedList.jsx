@@ -5,6 +5,8 @@ import { linkedListData } from "../../../data/data-structure/LinkedListData";
 import PlayBar from "../../../components/PlayBar";
 import LinkedListHeader from "./components/LinkedListHeader";
 import Operations from "./components/Operations";
+import { handleAddFirst } from "./logic/addFirst";
+import { handleAddLast } from "./logic/addLast";
 
 
 export default function LinkedList() {
@@ -12,24 +14,22 @@ export default function LinkedList() {
     { id: 0, value: 12, state: "normal", arrow: "forward" },
     { id: 2, value: 1, state: "normal", arrow: "forward" },
     { id: 3, value: 7, state: "normal", arrow: "forward" },
-    { id: 4, value: 8, state: "normal", arrow: "forward" },
     { id: 5, value: 8, state: "normal", arrow: "forward" },
-    { id: 6, value: 8, state: "normal", arrow: "forward" },
     { id: 7, value: 8, state: "null", arrow: "forward" },
   ];
 
   const initialVisualNodes = [
-    { id: 0, value: 12, state: "normal", arrow: "down" },
-    { id: 2, value: 1, state: "unvisible", arrow: "forward" },
-    { id: 3, value: 7, state: "unvisible", arrow: "forward" },
-    { id: 4, value: 8, state: "unvisible", arrow: "forward" },
-    { id: 5, value: 8, state: "unvisible", arrow: "forward" },
-    { id: 6, value: 8, state: "unvisible", arrow: "forward" },
-    { id: 7, value: 8, state: "unvisible", arrow: "forward" },
+    { id: 0, value: 0, state: "unvisible", arrow: "forward" },
+    { id: 2, value: 0, state: "unvisible", arrow: "forward" },
+    { id: 3, value: 0, state: "unvisible", arrow: "forward" },
+    { id: 6, value: 0, state: "unvisible", arrow: "forward" },
+    { id: 7, value: 0, state: "unvisible", arrow: "forward" },
   ];
 
   const [linkedlist, setLinkedList] = useState(initialLL);
   const [visualNodes, setVisualNodes] = useState(initialVisualNodes);
+
+  console.log(visualNodes);
 
   const [inputValue, setInputValue] = useState(5);
   const [inputIndex, setInputIndex] = useState(2);
@@ -40,15 +40,17 @@ export default function LinkedList() {
   const [tasking, setTasking] = useState(false);
   const [currentLine, setCurrentLine] = useState(-1);
 
-  const [speed, setSpeed] = useState(1000);
+  const [speed, setSpeed] = useState(2000);
   const [step, setStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const [stepArr,setStepArr] = useState([]);
   const [currentLineArr,setCurrentLineArr] = useState([]);
-  const [messageArr, setMessageArr] = useState("Choose an operation to start visualization");
-  
+  const [messageArr, setMessageArr] = useState([]);
+  const [visualNodesArr,setVisualNodesArr] = useState("");
 
+  let totalSteps = stepArr.length;
+  
    useEffect(() => {
       if(isPlaying){
         if (step >= stepArr.length){ 
@@ -58,16 +60,17 @@ export default function LinkedList() {
         }
   
         if(step == stepArr.length-1){
-          setOutputValue(output);
-          setTimeout(() => setOutputValue(""),6000);
+          // setOutputValue(output);
+          // setTimeout(() => setOutputValue(""),6000);
         }
   
         const timer = setTimeout(() => {
-          setArray(stepArr[step]);
+          setLinkedList(stepArr[step]);
           setCurrentLine(currentLineArr[step]);
           if(messageArr[step]) setMessage(messageArr[step]);
+          if(visualNodesArr[step]) setVisualNodes(visualNodesArr[step]);
           setStep((prev) => prev + 1);
-        }, speed);
+        }, speed);  
         
         return () => clearTimeout(timer);
       }else{
@@ -80,15 +83,40 @@ export default function LinkedList() {
         }
   
         if(step == stepArr.length-1){
-          setOutputValue(output);
-          setTimeout(() => setOutputValue(""),5000);
+          // setOutputValue(output);
+          // setTimeout(() => setOutputValue(""),5000);
         }
   
-          setArray(stepArr[step]);
+          setLinkedList(stepArr[step]);
           setCurrentLine(currentLineArr[step]);
           if(messageArr[step]) setMessage(messageArr[step]);
+          if(visualNodesArr[step]) setVisualNodes(visualNodesArr[step]);
       }
+
     },[step, stepArr,isPlaying]);
+
+    function handleStart(){
+      setIsPlaying(true);
+
+      if(operation == "addFirst"){
+        handleAddFirst(linkedlist,visualNodes,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr);
+      }else if(operation == "addLast"){
+        handleAddLast(linkedlist,visualNodes,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr);
+      }else if(operation == "removeFirst"){
+        handleRemoveFirst(linkedlist,visualNodes,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr);
+      }else if(operation == "removeLast"){
+        handleRemoveLast(linkedlist,visualNodes,inputValue,setStepArr,setMessageArr,setCurrentLineArr,setVisualNodesArr);
+      }
+    }
+
+    function onQuit(){
+    if(stepArr.length){ 
+      setLinkedList([...stepArr[0]])
+      setStepArr([]);
+    };
+    setCurrentLine(-1);
+    setIsPlaying(false);
+  }
 
   return (
     <div className="h-screen flex flex-col bg-gray-100 dark:bg-slate-900">
@@ -108,7 +136,7 @@ export default function LinkedList() {
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-2 overflow-hidden">
           {operation !== "none" ? (
             <div className="h-full overflow-auto">
-              <CodeVisual code={linkedListData.code[operation]} />
+              <CodeVisual code={linkedListData.code[operation]}  currentLine={currentLine}/>
             </div>
           ) : (
             <LinkedListHeader />
@@ -118,13 +146,13 @@ export default function LinkedList() {
         {/* RIGHT: Operation Panel */}
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4 overflow-auto">
           {/* Operation List */}
-          <Operations linkedlist={linkedlist} operation={operation} setOperation={setOperation} message={message} />
+          <Operations linkedlist={linkedlist} operation={operation} setOperation={setOperation} message={message} inputValue={inputValue} setInputValue={setInputValue} inputIndex={inputIndex} setInputIndex={setInputIndex} handleStart={handleStart} onQuit={onQuit} isRunning={isPlaying} />
         </div>
       </div>
 
       {/* BOTTOM: PlayBar (fixed height) */}
       <div className="shrink-0">
-        <PlayBar />
+        <PlayBar  isPlaying={isPlaying} setIsPlaying={setIsPlaying} step={step} setStep={setStep} speed={speed} setSpeed={setSpeed} totalSteps={totalSteps} onQuit={onQuit} />
       </div>
 
     </div>
